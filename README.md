@@ -1,2 +1,2 @@
 # jsonparser
-the smallest json parser in C
+Json parser in C
