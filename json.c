@@ -24,6 +24,35 @@ static int str_next_occurence(string str, char ch)
     return (*str == '\0') ? -1 : pos;
 }
 
+void freeJSON(JSON_OBJECT *obj) {
+    int i;
+
+    if (obj == NULL) {
+        return;
+    }
+
+    if (obj->pairs == NULL) {
+        free(obj);
+        return;
+    }
+
+    for (i = 0; i < obj->count; i++) {
+        if (obj->pairs[i].key != NULL)
+            free(obj->pairs[i].key);
+        
+        if (obj->pairs[i].value != NULL) {
+            switch (obj->pairs[i].type) {
+                case JSON_STRING:
+                    free(obj->pairs[i].value->string_value);
+                    break;
+                case JSON_OBJECT_VALUE:
+                    free(obj->pairs[i].value->json_object);
+            }
+            free(obj->pairs[i].value);
+        }
+    }
+}
+
 int main() 
 {
     printf("Welcome to Jason!\n");
