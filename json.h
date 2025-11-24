@@ -29,7 +29,7 @@ struct json_pair;
 union  json_value;
 
 typedef enum {
-    JSON_STRING = 0,
+    JSON_STRING_VALUE = 0,
     JSON_OBJECT_VALUE
 } JSON_VALUE_TYPE;
 
