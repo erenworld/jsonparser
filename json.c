@@ -27,7 +27,9 @@ static int str_next_occurence(string str, char ch)
 
 void freeJSON(JSON_OBJECT *obj)
 {
-    if (!obj) return;
+    if (!obj) {
+        return;
+    } 
 
     if (obj->pairs) {
         for (int i = 0; i < obj->count; i++) {
@@ -95,7 +97,6 @@ static JSON_OBJECT * _parseJSON(string str, int *offset)
                 remove_white_space_offset(str, _offset);
         
                 if (*str != ':') {
-                    printf("DEBUG: Expected ':' at offset %d\n", _offset);
                     freeJSON(obj);
                     return NULL;
                 }
@@ -114,7 +115,6 @@ static JSON_OBJECT * _parseJSON(string str, int *offset)
                     pair->value->json_object = _parseJSON(str, &consumed);
         
                     if (!pair->value->json_object) {
-                        printf("DEBUG: Failed nested object at offset=%d\n", _offset);
                         freeJSON(obj);
                         return NULL;
                     }
@@ -172,7 +172,7 @@ int main()
 {
     printf("Welcome to Jason!\n");
 
-    string json_text = "{\"name\":\"Alice\",\"info\":{\"city\":\"NYC\"}}";
+    string json_text = "{\"name\":\"Alice\",\"city\":\"NYC\"}}";
 
     JSON_OBJECT *root = parseJSON(json_text);
 
